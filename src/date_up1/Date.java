@@ -81,7 +81,7 @@ public class Date
 		}
 		else if (month == 2)
 		{
-			if ( leap_year(year) )
+			if ( leap_year() )
 			{
 				if ( day > 0 && day<30 )
 				{
@@ -110,7 +110,7 @@ public class Date
 		}
 	}
 
-	public void setYear(int year)
+  	public void setYear(int year)
 	{
 		if ( year >= 0)
 		{
@@ -180,7 +180,7 @@ public class Date
 		return 0;
 	}
 	
-	public boolean leap_year( int year )
+	public boolean leap_year()
 	{
 	    boolean leap = false;
 
@@ -201,7 +201,7 @@ public class Date
       }
 	
 	
-	public int number_count ()
+	public int day_count ()
 	{
 		int day_count = 0;
 		if(month == 1)
@@ -226,7 +226,14 @@ public class Date
 
 	}
 	
-	public String add_second( Date d )
+	public int week_count()
+	{
+		int weeks = Math.round(day_count() / 7); 
+		if(weeks == 0) return 1; 
+		return weeks;
+	}
+	
+	public String add_second()
 	{
 		second = second +1;
 		if (second == 60)
@@ -239,19 +246,22 @@ public class Date
 				hour++;
 				if (hour == 25)
 				{
+					hour = 0;
 					day++;
 					if ( ( day == 32) && ( (month == 1) || (month == 3) || (month == 5) || (month == 7) || (month == 8) || (month == 10) || (month == 12) ))
 					{
+						day = 1;
 						month++;
 						if (month == 13)
 						{
+							month = 1;
 							year ++;
 						}
 					}
 					
 					if 	(( day == 29) && (month == 2))
 					{
-						if (leap_year(year))
+						if (leap_year())
 						{
 							day = 29;
 						}
@@ -264,9 +274,29 @@ public class Date
 				}
 			}
 		}
-		String result  = "Second = " + second + "Minute = " + minute + "hour = " + hour + "Day = " + day + " Month = " + month + "Year = " + year;
+		String result  = day + "." + month + "." + year + " , " + hour + ":" + minute + ":" + second;
 		return result;
+		
 	}
 
-
+	public DayOfWeek dayOfWeek()
+	{
+		Date temp =new Date(this.second, this.minute, this.hour, this.day, this.month, this.year );
+		int [] arr = new int [] {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
+		if(temp.month < 3) 
+		{
+			temp.year--;
+		}
+		int smth = (temp.year + temp.year / 4 - temp.year / 100 + temp.year / 400 + arr[temp.month - 1] + temp.day) % 7;
+		DayOfWeek result = DayOfWeek.definiteDay(smth);
+		return(result);
+	}
+	public String toString()
+	{
+		DayOfWeek d = dayOfWeek();
+		String result  = d + "|"+day + "." + month + "." + year + " , " + hour + ":" + minute + ":" + second;
+		return result;
+	}
+	
+	
 }
