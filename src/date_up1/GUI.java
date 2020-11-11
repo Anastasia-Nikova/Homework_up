@@ -48,17 +48,17 @@ public class GUI
 	
 		int y = 50;
 		int x = 20;
-		JPanel [][] MondayPanels = new JPanel[7][6];
-		for( int i = 0; i<MondayPanels.length; i++ )
+		JPanel [][] weekPanels = new JPanel[7][6];
+		for( int i = 0; i<weekPanels.length; i++ )
 		{
 			y = 50;
-			for( int k = 0; k<MondayPanels[i].length; k++ )
+			for( int k = 0; k<weekPanels[i].length; k++ )
 			{
-				MondayPanels[i][k] = new JPanel();
+				weekPanels[i][k] = new JPanel();
 				
-				MondayPanels[i][k].setBounds(x,y,100,40);
-				MondayPanels[i][k].setBackground(Color.pink);
-				window.add(MondayPanels[i][k]);
+				weekPanels[i][k].setBounds(x,y,100,40);
+				weekPanels[i][k].setBackground(Color.pink);
+				window.add(weekPanels[i][k]);
 				y += 50;
 			}
 			x += 110;
